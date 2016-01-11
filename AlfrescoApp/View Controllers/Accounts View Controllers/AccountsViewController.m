@@ -1,21 +1,21 @@
 /*******************************************************************************
  * Copyright (C) 2005-2015 Alfresco Software Limited.
- * 
+ *
  * This file is part of the Alfresco Mobile iOS App.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *  
+ *
  *  http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  ******************************************************************************/
- 
+
 #import "AccountsViewController.h"
 #import "AccountManager.h"
 #import "AccountTypeSelectionViewController.h"
@@ -24,6 +24,8 @@
 #import "LoginManager.h"
 #import "AccountInfoViewController.h"
 #import "UniversalDevice.h"
+#import "LocalAuthenticationManager.h"
+
 
 static NSInteger const kAccountSelectionButtonWidth = 32;
 static NSInteger const kAccountSelectionButtongHeight = 32;
@@ -332,8 +334,20 @@ static CGFloat const kAccountNetworkCellHeight = 50.0f;
     AccountManager *accountManager = [AccountManager sharedManager];
     UserAccount *account = self.tableViewData[indexPath.section][indexPath.row];
     
-    [accountManager removeAccount:account];
-    [self updateAccountList];
+    AccountsViewController __weak *weakSelf = self;
+    
+    [[LocalAuthenticationManager sharedManager] authenticateForAccount:account
+                                                       completionBlock:^(BOOL success, NSError *error)
+     {
+         if (success)
+             dispatch_async(dispatch_get_main_queue(), ^
+                            {
+                                [accountManager removeAccount:account];
+                                [weakSelf updateAccountList];
+                            });
+         else
+             NSLog(@"commitEditingStyle - error: %@", error.localizedDescription);
+     }];
 }
 
 #pragma mark - Add Account
