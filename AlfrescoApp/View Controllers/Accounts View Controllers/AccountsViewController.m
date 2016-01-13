@@ -25,6 +25,7 @@
 #import "AccountInfoViewController.h"
 #import "UniversalDevice.h"
 #import "LocalAuthenticationManager.h"
+#import "AlfrescoApp-Swift.h"
 
 
 static NSInteger const kAccountSelectionButtonWidth = 32;
@@ -336,18 +337,24 @@ static CGFloat const kAccountNetworkCellHeight = 50.0f;
     
     AccountsViewController __weak *weakSelf = self;
     
-    [[LocalAuthenticationManager sharedManager] authenticateForAccount:account
-                                                       completionBlock:^(BOOL success, NSError *error)
-     {
-         if (success)
-             dispatch_async(dispatch_get_main_queue(), ^
-                            {
-                                [accountManager removeAccount:account];
-                                [weakSelf updateAccountList];
-                            });
-         else
-             NSLog(@"commitEditingStyle - error: %@", error.localizedDescription);
-     }];
+    LocalAuthenticationCompletionBlock localAuthenticationCompletionBlock = ^void(NSError *error)
+    {
+        if (error == nil)
+            dispatch_async(dispatch_get_main_queue(), ^
+               {
+                   [accountManager removeAccount:account];
+                   [weakSelf updateAccountList];
+               });
+        else
+            NSLog(@"commitEditingStyle - error: %@", error.localizedDescription);
+    };
+    
+    // Objective-C Local Authentication
+    [LocalAuthenticationManager authenticateForAccount:account
+                                       completionBlock:localAuthenticationCompletionBlock];
+    // Swift Local Authentication
+//    [LocalAuthenticationManager2 authenticate:account
+//                                   completion:localAuthenticationCompletionBlock];
 }
 
 #pragma mark - Add Account

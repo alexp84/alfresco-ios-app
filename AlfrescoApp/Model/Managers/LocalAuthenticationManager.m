@@ -11,11 +11,21 @@
 #import "AppDelegate.h"
 #import "UserAccount.h"
 
+
+@interface LocalAuthenticationManager ()
+
+@property (nonatomic, strong) UserAccount *userAccount;
+@property (nonatomic, strong) LocalAuthenticationCompletionBlock completionBlock;
+
+@end
+
+
 @implementation LocalAuthenticationManager
 {
     LocalAuthenticationCompletionBlock _completionBlock;
     UserAccount *_userAccount;
 }
+
 
 + (LocalAuthenticationManager *) sharedManager
 {
@@ -33,15 +43,17 @@
     return sharedManager;
 }
 
-- (void) authenticateForAccount:(UserAccount *)account completionBlock:(LocalAuthenticationCompletionBlock)completionBlock
++ (void) authenticateForAccount:(UserAccount *)account completionBlock:(LocalAuthenticationCompletionBlock)completionBlock
 {
-    _userAccount = [account copy];
-    _completionBlock = completionBlock;
+    LocalAuthenticationManager *manager = [LocalAuthenticationManager sharedManager];
     
-    if ([self canEvaluatePolicy])
-        [self evaluatePolicy];
+    manager.userAccount = [account copy];
+    manager.completionBlock = completionBlock;
+    
+    if ([manager canEvaluatePolicy])
+        [manager evaluatePolicy];
     else
-        [self fallback];
+        [manager fallback];
 }
 
 - (BOOL)canEvaluatePolicy
@@ -76,7 +88,7 @@
          if (success)
          {
              if (_completionBlock)
-                 _completionBlock (YES, nil);
+                 _completionBlock (nil);
              
              [self cleanup];
          }
@@ -97,7 +109,7 @@
                      
                 case kLAErrorUserCancel:
                  {
-                     _completionBlock(NO, authenticationError);
+                     _completionBlock(authenticationError);
                      [self cleanup];
                  }
                      break;
@@ -123,7 +135,7 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action)
     {
         NSError *error = [NSError errorWithDomain:@"The user canceled the fallback mechanism." code:-1 userInfo:nil];
-        _completionBlock(NO, error);
+        _completionBlock(error);
         [self cleanup];
     }];
     [alertController addAction:cancelAction];
@@ -136,7 +148,7 @@
         if ([passwordTextField.text isEqualToString:_userAccount.password])
         {
             NSLog(@"password match -> procede with completion block");
-            _completionBlock (YES, nil);
+            _completionBlock (nil);
             [self cleanup];
         }
         else
