@@ -100,21 +100,20 @@
              switch (authenticationError.code)
              {
                  case kLAErrorUserFallback:
-                 case kLAErrorTouchIDLockout:
                  case kLAErrorAuthenticationFailed:
+//                 case kLAErrorTouchIDLockout:
                  {
                      [self fallback];
                  }
                      break;
                      
                 case kLAErrorUserCancel:
+                case kLAErrorSystemCancel:
+                default:
                  {
                      _completionBlock(authenticationError);
                      [self cleanup];
                  }
-                     break;
-                     
-                 default:
                      break;
              }
          }

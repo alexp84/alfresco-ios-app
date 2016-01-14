@@ -79,11 +79,9 @@ import UIKit
                     self.fallback()
                     //                    case LAError.TouchIDLockout.rawValue:
                     //                        self.fallback()
-                case LAError.UserCancel.rawValue:
+                default:
                     self.completion?(error: error)
                     self.cleanup()
-                default:
-                    print("default")
                 }
             }
         }
@@ -100,7 +98,7 @@ import UIKit
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action: UIAlertAction) -> Void in
             let error = NSError(domain: "The user canceled the fallback mechanism", code: -1, userInfo: nil)
-            self.completion!(error: error)
+            self.completion?(error: error)
             self.cleanup()
         }
         alertController.addAction(cancelAction)
@@ -111,7 +109,7 @@ import UIKit
             if passwordTextField.text == self.userAccount?.password
             {
                 print("password match -> procede with completion block")
-                self.completion!(error: nil)
+                self.completion?(error: nil)
                 self.cleanup()
             }
             else

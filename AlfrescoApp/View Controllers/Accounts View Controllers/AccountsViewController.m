@@ -350,11 +350,11 @@ static CGFloat const kAccountNetworkCellHeight = 50.0f;
     };
     
     // Objective-C Local Authentication
-    [LocalAuthenticationManager authenticateForAccount:account
-                                       completionBlock:localAuthenticationCompletionBlock];
+//    [LocalAuthenticationManager authenticateForAccount:account
+//                                       completionBlock:localAuthenticationCompletionBlock];
     // Swift Local Authentication
-//    [LocalAuthenticationManager2 authenticate:account
-//                                   completion:localAuthenticationCompletionBlock];
+    [LocalAuthenticationManager2 authenticate:account
+                                   completion:localAuthenticationCompletionBlock];
 }
 
 #pragma mark - Add Account
