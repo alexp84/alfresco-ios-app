@@ -36,8 +36,9 @@
 #import "NSDictionary+Extension.h"
 #import "UniversalDevice.h"
 #import "MainMenuLocalConfigurationBuilder.h"
-
+#import "LocalAuthenticationManager.h"
 #import <HockeySDK/HockeySDK.h>
+//#import "ABPadLockScreenSetupViewController.h"
 
 @import MediaPlayer;
 
@@ -51,6 +52,7 @@ static NSString * const kMDMMissingRequiredKeysKey = @"MDMMissingKeysKey";
 @property (nonatomic, strong, readwrite) MainMenuConfigurationViewController *mainMenuViewController;
 @property (nonatomic, strong) MDMUserDefaultsConfigurationHelper *appleConfigurationHelper;
 @property (nonatomic, strong) MDMUserDefaultsConfigurationHelper *mobileIronConfigurationHelper;
+@property (nonatomic, strong) NSString *thePin;
 
 @end
 
@@ -148,6 +150,9 @@ static NSString * const kMDMMissingRequiredKeysKey = @"MDMMissingKeysKey";
     
     // Make the window visible
     [self.window makeKeyAndVisible];
+    
+    [LocalAuthenticationManager setup];
+    [LocalAuthenticationManager showPinScreen];
     
     if (!safeMode)
     {

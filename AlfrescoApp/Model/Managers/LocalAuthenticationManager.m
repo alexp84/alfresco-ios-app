@@ -10,12 +10,15 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import "AppDelegate.h"
 #import "UserAccount.h"
+#import "ABPadLockScreenSetupViewController.h"
+#import "ABPadLockScreenViewController.h"
 
 
-@interface LocalAuthenticationManager ()
+@interface LocalAuthenticationManager () <ABPadLockScreenSetupViewControllerDelegate, ABPadLockScreenViewControllerDelegate>
 
 @property (nonatomic, strong) UserAccount *userAccount;
 @property (nonatomic, strong) LocalAuthenticationCompletionBlock completionBlock;
+@property (nonatomic, strong) NSString *thePin;
 
 @end
 
@@ -37,10 +40,53 @@
         dispatch_once(&onceToken, ^
         {
             sharedManager = [LocalAuthenticationManager new];
+            sharedManager.thePin = [[NSUserDefaults standardUserDefaults] stringForKey:kPin];
         });
     }
     
     return sharedManager;
+}
+
++ (void) setup
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:[LocalAuthenticationManager sharedManager]];
+    [[NSNotificationCenter defaultCenter] addObserver:[LocalAuthenticationManager sharedManager] selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:[LocalAuthenticationManager sharedManager] selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
++ (void) showPinScreen
+{
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:kPin] == nil)
+        [LocalAuthenticationManager showPinSetupScreen];
+    else
+        [LocalAuthenticationManager showPinScreenAndForceBiometrics:YES];
+}
+
++ (void) showPinSetupScreen
+{
+    ABPadLockScreenSetupViewController *lockScreen = [[ABPadLockScreenSetupViewController alloc] initWithDelegate:[LocalAuthenticationManager sharedManager] complexPin:YES subtitleLabelText:@"Please setup a PIN to continue."];
+    lockScreen.tapSoundEnabled = YES;
+    lockScreen.errorVibrateEnabled = YES;
+    lockScreen.modalPresentationStyle = UIModalPresentationFullScreen;
+    lockScreen.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [delegate.window.rootViewController presentViewController:lockScreen animated:YES completion:nil];
+}
+
++ (void) showPinScreenAndForceBiometrics: (BOOL) showBiometrics
+{
+    ABPadLockScreenViewController *lockScreen = [[ABPadLockScreenViewController alloc] initWithDelegate:[LocalAuthenticationManager sharedManager] complexPin:YES];
+    [lockScreen setAllowedAttempts:3];
+    lockScreen.modalPresentationStyle = UIModalPresentationFullScreen;
+    lockScreen.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [lockScreen cancelButtonDisabled:YES];
+
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [delegate.window.rootViewController presentViewController:lockScreen animated:YES completion:nil];
+
+    if (showBiometrics)
+        [[LocalAuthenticationManager sharedManager] applicationWillEnterForeground:nil];
 }
 
 + (void) authenticateForAccount:(UserAccount *)account completionBlock:(LocalAuthenticationCompletionBlock)completionBlock
@@ -77,18 +123,21 @@
 - (void)evaluatePolicy
 {
     LAContext *context = [[LAContext alloc] init];
-    context.localizedFallbackTitle = @"Enter account password";
+    context.localizedFallbackTitle = @"";// @"Enter account password";
     __block  NSString *message;
     
     // Show the authentication UI with the reason string.
     [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-            localizedReason:@"Please use your fingerprint to confirm account delete!"
+            localizedReason:@"Please use your fingerprint to continue!"
                       reply:^(BOOL success, NSError *authenticationError)
      {
          if (success)
          {
              if (_completionBlock)
                  _completionBlock (nil);
+             
+             AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+             [delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
              
              [self cleanup];
          }
@@ -111,7 +160,8 @@
                 case kLAErrorSystemCancel:
                 default:
                  {
-                     _completionBlock(authenticationError);
+                     if (_completionBlock)
+                         _completionBlock(authenticationError);
                      [self cleanup];
                  }
                      break;
@@ -168,6 +218,62 @@
 {
     _userAccount = nil;
     _completionBlock = nil;
+}
+
+#pragma mark - Notifications Handlers
+
+- (void) applicationWillEnterForeground: (NSNotification *) notification
+{
+    LocalAuthenticationManager *manager = [LocalAuthenticationManager sharedManager];
+    
+    if ([manager canEvaluatePolicy])
+        [manager evaluatePolicy];
+}
+
+- (void) applicationDidEnterBackground: (NSNotification *) notification
+{
+    [LocalAuthenticationManager showPinScreenAndForceBiometrics:NO];
+}
+
+#pragma mark - ABPadLockScreenSetupViewControllerDelegate Methods
+
+- (void)pinSet:(NSString *)pin padLockScreenSetupViewController:(ABPadLockScreenSetupViewController *)padLockScreenViewController
+{
+    //    [self dismissViewControllerAnimated:YES completion:nil];
+    self.thePin = pin;
+    NSLog(@"Pin set to pin %@", self.thePin);
+    
+    [[NSUserDefaults standardUserDefaults] setObject:pin forKey:kPin];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - ABLockScreenDelegate Methods
+
+- (BOOL)padLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController validatePin:(NSString*)pin;
+{
+    NSLog(@"Validating pin %@", pin);
+    
+    return [self.thePin isEqualToString:pin];
+}
+
+- (void)unlockWasSuccessfulForPadLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController
+{
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Pin entry successfull");
+}
+
+- (void)unlockWasUnsuccessful:(NSString *)falsePin afterAttemptNumber:(NSInteger)attemptNumber padLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController
+{
+    NSLog(@"Failed attempt number %ld with pin: %@", (long)attemptNumber, falsePin);
+}
+
+- (void)unlockWasCancelledForPadLockScreenViewController:(ABPadLockScreenAbstractViewController *)padLockScreenViewController
+{
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"Pin entry cancelled");
 }
 
 @end

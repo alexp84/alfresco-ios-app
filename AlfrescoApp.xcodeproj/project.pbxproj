@@ -81,6 +81,13 @@
 		08E1EA4018DB2E2700F9052F /* CreateTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E1EA3F18DB2E2700F9052F /* CreateTaskViewController.xib */; };
 		08E89C9417E7488C006936DF /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E89C9317E7488C006936DF /* SyncManager.m */; };
 		08E89CA317E7593B006936DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08E89CA117E7593B006936DF /* InfoPlist.strings */; };
+		232E1AE31C57A9E1007F028D /* ABPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E1AD61C57A9E1007F028D /* ABPadButton.m */; };
+		232E1AE41C57A9E1007F028D /* ABPadLockScreenAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E1AD91C57A9E1007F028D /* ABPadLockScreenAbstractViewController.m */; };
+		232E1AE51C57A9E1007F028D /* ABPadLockScreenSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E1ADB1C57A9E1007F028D /* ABPadLockScreenSetupViewController.m */; };
+		232E1AE61C57A9E1007F028D /* ABPadLockScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E1ADD1C57A9E1007F028D /* ABPadLockScreenView.m */; };
+		232E1AE71C57A9E1007F028D /* ABPadLockScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E1ADF1C57A9E1007F028D /* ABPadLockScreenViewController.m */; };
+		232E1AE81C57A9E1007F028D /* ABPinSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 232E1AE11C57A9E1007F028D /* ABPinSelectionView.m */; };
+		232E1AE91C57A9E1007F028D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 232E1AE21C57A9E1007F028D /* Info.plist */; };
 		23CA70BC1C43C0EB00D1C175 /* LocalAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CA70BB1C43C0EB00D1C175 /* LocalAuthenticationManager.m */; };
 		23CA70C91C43C22900D1C175 /* LocalAuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CA70C81C43C22900D1C175 /* LocalAuthenticationManager.swift */; };
 		2711979E1912ADE60073C3EC /* ALFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2711979D1912ADE60073C3EC /* ALFTableView.m */; };
@@ -939,6 +946,20 @@
 		08E89CB017E75BA6006936DF /* SyncTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncTest.m; sourceTree = "<group>"; };
 		08E89CB217E76012006936DF /* AlfrescoBaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlfrescoBaseTest.h; sourceTree = "<group>"; };
 		08E89CB317E76012006936DF /* AlfrescoBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlfrescoBaseTest.m; sourceTree = "<group>"; };
+		232E1AD51C57A9E1007F028D /* ABPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadButton.h; sourceTree = "<group>"; };
+		232E1AD61C57A9E1007F028D /* ABPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadButton.m; sourceTree = "<group>"; };
+		232E1AD71C57A9E1007F028D /* ABPadLockScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreen.h; sourceTree = "<group>"; };
+		232E1AD81C57A9E1007F028D /* ABPadLockScreenAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenAbstractViewController.h; sourceTree = "<group>"; };
+		232E1AD91C57A9E1007F028D /* ABPadLockScreenAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenAbstractViewController.m; sourceTree = "<group>"; };
+		232E1ADA1C57A9E1007F028D /* ABPadLockScreenSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenSetupViewController.h; sourceTree = "<group>"; };
+		232E1ADB1C57A9E1007F028D /* ABPadLockScreenSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenSetupViewController.m; sourceTree = "<group>"; };
+		232E1ADC1C57A9E1007F028D /* ABPadLockScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenView.h; sourceTree = "<group>"; };
+		232E1ADD1C57A9E1007F028D /* ABPadLockScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenView.m; sourceTree = "<group>"; };
+		232E1ADE1C57A9E1007F028D /* ABPadLockScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPadLockScreenViewController.h; sourceTree = "<group>"; };
+		232E1ADF1C57A9E1007F028D /* ABPadLockScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPadLockScreenViewController.m; sourceTree = "<group>"; };
+		232E1AE01C57A9E1007F028D /* ABPinSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPinSelectionView.h; sourceTree = "<group>"; };
+		232E1AE11C57A9E1007F028D /* ABPinSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPinSelectionView.m; sourceTree = "<group>"; };
+		232E1AE21C57A9E1007F028D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23CA70BA1C43C0EB00D1C175 /* LocalAuthenticationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalAuthenticationManager.h; sourceTree = "<group>"; };
 		23CA70BB1C43C0EB00D1C175 /* LocalAuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalAuthenticationManager.m; sourceTree = "<group>"; };
 		23CA70C71C43C22800D1C175 /* AlfrescoApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AlfrescoApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -2093,6 +2114,27 @@
 				08E89CA617E7593B006936DF /* AlfrescoApp Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		232E1AD41C57A9E1007F028D /* ABPadLockScreen */ = {
+			isa = PBXGroup;
+			children = (
+				232E1AD51C57A9E1007F028D /* ABPadButton.h */,
+				232E1AD61C57A9E1007F028D /* ABPadButton.m */,
+				232E1AD71C57A9E1007F028D /* ABPadLockScreen.h */,
+				232E1AD81C57A9E1007F028D /* ABPadLockScreenAbstractViewController.h */,
+				232E1AD91C57A9E1007F028D /* ABPadLockScreenAbstractViewController.m */,
+				232E1ADA1C57A9E1007F028D /* ABPadLockScreenSetupViewController.h */,
+				232E1ADB1C57A9E1007F028D /* ABPadLockScreenSetupViewController.m */,
+				232E1ADC1C57A9E1007F028D /* ABPadLockScreenView.h */,
+				232E1ADD1C57A9E1007F028D /* ABPadLockScreenView.m */,
+				232E1ADE1C57A9E1007F028D /* ABPadLockScreenViewController.h */,
+				232E1ADF1C57A9E1007F028D /* ABPadLockScreenViewController.m */,
+				232E1AE01C57A9E1007F028D /* ABPinSelectionView.h */,
+				232E1AE11C57A9E1007F028D /* ABPinSelectionView.m */,
+				232E1AE21C57A9E1007F028D /* Info.plist */,
+			);
+			path = ABPadLockScreen;
 			sourceTree = "<group>";
 		};
 		2711979A1912AD860073C3EC /* Subclasses */ = {
@@ -3662,6 +3704,7 @@
 		73B959CD17A67A760099FB84 /* Third Party Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				232E1AD41C57A9E1007F028D /* ABPadLockScreen */,
 				730B444718EC393B008A0977 /* Flurry */,
 				73B0789D189AB4F800D02C43 /* Reachability */,
 			);
@@ -4398,6 +4441,7 @@
 				733638B91913BA1600472A57 /* system_notice_exclamation.png in Resources */,
 				73B579B11B172C2A009D30B6 /* MenuIconTypeMappings.plist in Resources */,
 				2B93CBCF1ABACE2E003BAD2E /* ConnectionDiagnosticStoryboard.storyboard in Resources */,
+				232E1AE91C57A9E1007F028D /* Info.plist in Resources */,
 				0833248717FEB9C400EE6AA8 /* SyncObstacleTableViewCell.xib in Resources */,
 				2BFE12951AC2E734000EB19D /* circle_cross.png in Resources */,
 				08344EF918E2E64E00B061C0 /* DatePickerViewController.xib in Resources */,
@@ -4743,6 +4787,7 @@
 				2BC9AE6E1BDA7738003523C8 /* AccountInfoDetailsViewController.m in Sources */,
 				2BFB07FD1B149FFD00ED8DFF /* ParentCollectionViewController.m in Sources */,
 				08E89C9417E7488C006936DF /* SyncManager.m in Sources */,
+				232E1AE51C57A9E1007F028D /* ABPadLockScreenSetupViewController.m in Sources */,
 				738664F21906B2420021D1BD /* TaskApproversCell.m in Sources */,
 				73B9584717A6750F0099FB84 /* FileURLHandler.m in Sources */,
 				0876A05F18D9A9E30035370A /* PeoplePicker.m in Sources */,
@@ -4800,6 +4845,7 @@
 				08E1EA3118DB057900F9052F /* TasksAndAttachmentsViewController.m in Sources */,
 				7386650B1906B2D10021D1BD /* VersionHistoryCell.m in Sources */,
 				73881F5618883BE10052C75F /* UIColor+Custom.m in Sources */,
+				232E1AE41C57A9E1007F028D /* ABPadLockScreenAbstractViewController.m in Sources */,
 				7390B3591B03681E00E7191F /* AlfrescoConfigConstants.m in Sources */,
 				2B9031FA1C0EF78B005C10ED /* SearchService.m in Sources */,
 				736474F51B1879E400715B4F /* MainMenuConfigurationViewController.m in Sources */,
@@ -4829,6 +4875,7 @@
 				737972FA18A3DCC3007613B2 /* ActionViewHandler.m in Sources */,
 				73B579941B15EC5F009D30B6 /* MainMenuTableViewCell.m in Sources */,
 				73881F6D188956390052C75F /* WebBrowserViewController.m in Sources */,
+				232E1AE31C57A9E1007F028D /* ABPadButton.m in Sources */,
 				7396E85619742645001FB9A9 /* SettingButtonCell.m in Sources */,
 				73CF6CE81B21BCC900D79CA0 /* MainMenuVisibilityScope.m in Sources */,
 				738664F41906B2420021D1BD /* TaskPriorityCell.m in Sources */,
@@ -4847,6 +4894,7 @@
 				738664FF1906B27C0021D1BD /* NodePickerScopeCell.m in Sources */,
 				73B9586917A6750F0099FB84 /* NavigationViewController.m in Sources */,
 				082ED88918EC21A100518216 /* WorkflowHelper.m in Sources */,
+				232E1AE61C57A9E1007F028D /* ABPadLockScreenView.m in Sources */,
 				2B93CBCC1ABACCE0003BAD2E /* ConnectionDiagnosticViewController.m in Sources */,
 				7379733618AA8E9B007613B2 /* AlfrescoSync.xcdatamodeld in Sources */,
 				7390B3681B03681E00E7191F /* AlfrescoCreationConfig.m in Sources */,
@@ -4886,6 +4934,7 @@
 				08E1EA2718DB057900F9052F /* TaskDetailsViewController.m in Sources */,
 				27A1BFD119460318004DF61D /* ThumbnailOperation.m in Sources */,
 				7300DE9518EF010F00F5F57E /* FullScreenAnimationController.m in Sources */,
+				232E1AE71C57A9E1007F028D /* ABPadLockScreenViewController.m in Sources */,
 				2BB2657D1B78938F00EE7EB0 /* AlfrescoURLHandler.m in Sources */,
 				738664F01906B2420021D1BD /* PersonCell.m in Sources */,
 				0833244C17F32AA200EE6AA8 /* SyncNodeStatus.m in Sources */,
@@ -4923,6 +4972,7 @@
 				738664B91906B13D0021D1BD /* FileFolderCell.m in Sources */,
 				7390B3611B03681E00E7191F /* AlfrescoViewConfigHelper.m in Sources */,
 				73B95AFB17A68DF20099FB84 /* PlaceholderViewController.m in Sources */,
+				232E1AE81C57A9E1007F028D /* ABPinSelectionView.m in Sources */,
 				73632AEC1806F5D2007172EE /* SwitchViewController.m in Sources */,
 				275D6AD01BDEDB2E00FC5B60 /* FilteredTaskViewController.m in Sources */,
 				080675EB17EC44AA004AF3A2 /* CoreDataHelper.m in Sources */,

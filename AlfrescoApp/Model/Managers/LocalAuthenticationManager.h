@@ -21,4 +21,7 @@ typedef void (^LocalAuthenticationCompletionBlock)(NSError *error);
 + (void) authenticateForAccount:(UserAccount *)account
                 completionBlock:(LocalAuthenticationCompletionBlock)completionBlock;
 
++ (void) setup;
++ (void) showPinScreen;
+
 @end
